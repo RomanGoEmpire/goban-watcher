@@ -1,4 +1,4 @@
-# ⚪ Goban Watcher
+# ⚪ Goban Watcher ⚫
 
 The Goban Watcher is a GitHub repository focused on leveraging Computer Vision technology to simplify the notation of Baduk games.
 This project is designed to automate the generation of SGF (Smart Game Format) files by capturing and transcribing Baduk games through advanced Computer Vision algorithms.
