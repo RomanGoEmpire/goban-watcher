@@ -1,2 +1,7 @@
 python-dotenv
 pytest
+
+numpy
+polars
+opencv-python
+matplotlib
