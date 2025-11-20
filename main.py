@@ -294,11 +294,11 @@ def main() -> None:
     else:
         corners = setup_corners(cap)
 
-    logger.debug("Katago enabled. Trying to start it ...")
     model = load_rf(RF_PATH)
 
     katago_process = None
     if args.use_katago:
+        logger.debug("Katago enabled. Trying to start it ...")
         katago_process = start_katago_process()
 
     logger.debug("Katago started successfully")

@@ -3,7 +3,7 @@ name = "goban-watcher"
 version = "0.2.0"
 description = "Live Go Game recording with Computer Vision"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = "==3.13.*"
 dependencies = [
     "icecream>=2.1.7",
     "ipykernel>=6.30.1",
