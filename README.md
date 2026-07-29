@@ -3,6 +3,7 @@
 This project aims to automatically record Go games with the help of cameras and computer vision.
 
 ### Prerequisites
+
 > [!NOTE]
 > Using KataGo is optional and can be skipped!
 > Continue with "Starting the application"
@@ -13,19 +14,22 @@ To be able to use KataGo the following steps **must** be taken:
 
 1. Install [KataGo](https://github.com/lightvector/KataGo). Validate if `katago` command works.
 2. Install a KataGo model from [here](https://katagotraining.org/networks/). During development a model with the architecture of `b28c512nbt` was used.
-    1. Rename the model file to `b28c512nbt.bin.gz`
-    2. Move it into `katago/models/`.
-    3. Validate from root folder that this command works:
-      ```shell
-      katago analysis -config "katago/configs/analysis_example.cfg" -model "katago/models/b28c512nbt.bin.gz"
-      ```
+   1. Rename the model file to `b28c512nbt.bin.gz`
+   2. Move it into `katago/models/`.
+   3. Validate from root folder that this command works:
+   ```shell
+   katago analysis -config "katago/configs/analysis_example.cfg" -model "katago/models/b28c512nbt.bin.gz"
+   ```
 
 ### Starting the application
+
 The easiest way to get up and running is to use [uv](https://docs.astral.sh/uv/).
 Start the application with:
+
 ```sh
 uv run main.py
 ```
+
 Use `uv run main.py --help` to see all available flags.
 
 ### Usage
@@ -76,7 +80,6 @@ If more than then 3 stones are recognized at the same time it will "edit" the sg
 ![recording](/docs/images/004-recording.jpeg)
 
 To stop the recording press `q` or `esc` which will save the game one more time and exit the application.
-
 
 ## Research
 

@@ -21,16 +21,16 @@ class Game:
         self.move: int = 0
         self.captured_black: int = 0
         self.captured_white: int = 0
-        self.board_history: list = []
         self.board: list[list[Cell]] = self._initialize_board()
+        self.board_history: list = [self.board]
         self.neighbors = self.get_neighbors()
 
     def reset(self) -> None:
-        self.move: int = 0
-        self.captured_black: int = 0
-        self.captured_white: int = 0
-        self.board_history: list = []
+        self.move = 0
+        self.captured_black = 0
+        self.captured_white = 0
         self.board = self._initialize_board()
+        self.board_history = [self.board]
 
     @staticmethod
     def _initialize_board() -> list[list[Cell]]:
@@ -91,6 +91,11 @@ class Game:
         self.move += 1
         self.board = board_after_capture
         self.board_history.append(board_after_capture)
+
+    def remove_move(self) -> None:
+        self.board = self.board_history[-2]
+        self.board_history.pop()
+        self.move -= 1
 
     def get_group_and_liberties(
         self, x: int, y: int, board

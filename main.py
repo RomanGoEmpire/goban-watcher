@@ -46,7 +46,9 @@ def default_mouse_callback(event, x, y, flags, param):
 
 
 def setup_corners(cap: cv2.VideoCapture) -> list[list[int]]:
-    shape = (1080, 1920, 0)
+    ret, frame = cap.read()
+
+    shape = frame.shape
     y, x, _ = shape
     corners = default_corners(shape)
 
@@ -241,6 +243,15 @@ def add_move_to_sgf(
     return new_child
 
 
+def remove_last_move_from_sgf(node: sgf.Tree_node) -> sgf.Tree_node:
+    parent = node.parent
+    if parent is None:
+        raise ValueError("Cannot remove the root node of the SGF tree")
+
+    node.delete()
+    return parent
+
+
 def save_sgf_to_file(sgf_game) -> None:
     logger.debug("Saving SGF")
     with open((f"{RECORDING_PATH}/{timestamp}.sgf"), "wb") as f:
@@ -420,9 +431,6 @@ def main() -> None:
                 amount_player_stones - amount_opponent_stones in valid_offset
             )
 
-            print(valid_addition)
-            print(valid_amounts)
-            print(1 < len(moves_added) < MAX_DEPTH)
             if (
                 valid_addition
                 and valid_amounts
@@ -450,6 +458,21 @@ def main() -> None:
                     sgf_child = add_move_to_sgf(sgf_child, str(color), position)
                 save_sgf_to_file(sgf_game)
                 continue
+
+        # rollback: takeback or single missdetection
+        if len(moves_removed) == 1:
+            move = moves_removed[0]
+            x, y = move["position"]
+
+            if (
+                game.board[y][x] == move["current"]
+                and game.board_history[-2][y][x] == move["new"]
+            ):
+                game.remove_move()
+                sgf_child = remove_last_move_from_sgf(sgf_child)
+            logger.info(f"Move (Takeback): {move['position']}")
+            save_sgf_to_file(sgf_game)
+            continue
 
         if len(moves_added) > 0 or len(moves_removed) > 0:
             # Chaos.
